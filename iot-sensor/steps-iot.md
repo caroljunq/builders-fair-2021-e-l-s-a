@@ -4,6 +4,7 @@ The module IoT we built is responsible for collecting temperature and GPS positi
 This document describes the steps to produce the sensor.
 
 # Circuit Design
+<img src="./images-iot/design-circuit.png" alt="drawing" width="400"/>
 
 # 1 - Hardware and tools: what do you need?
 ## Hardware
@@ -14,7 +15,7 @@ This document describes the steps to produce the sensor.
 - 9v Battery Clip
 - Tension Regulator Lm2596
 - Wire Jumper (male/female)
-- Resistor 4.7K$\mathsf{k\Omega}$
+- Resistor 4.7K $\mathsf{k\Omega}$
 
 ## Tools
 - Soldering Iron and tin
@@ -45,3 +46,39 @@ With Arduino IDE, you need to install the support for ESP32. Follow the tutorial
 - **Important link:** https://dl.espressif.com/dl/package_esp32_index.json
 
 - **Tip:** the output on Arduino IDE sometimes presents garbled characters because your output might be in a different frequency compared to the board. Link --> https://stackoverflow.com/questions/17893792/arduino-garbled-serial-output . The baud on the Arduino IDE output has to be equal to the begin, both with 115200.
+
+## Images of the hardware
+<!-- ![alt text](./images-iot/resistor.jpg "Title") -->
+
+<img src="./images-iot/esp32.jpg" alt="drawing" width="200"/>
+<p>ESP32</p>
+
+<br>
+
+<img src="./images-iot/gps-sensor.jpg" alt="drawing" width="300"/>
+<p>GPS Sensor GY-NEO6MV2</p>
+
+<br>
+
+<img src="./images-iot/temperature-sensor.jpg" alt="drawing" width="300"/>
+<p>Temperature sensor Ds18b20</p>
+
+<br>
+
+<img src="./images-iot/tension-regulator.jpg" alt="drawing" width="300"/>
+<p>Tension Regulator Lm2596</p>
+
+<br>
+
+<img src="./images-iot/resistor.jpg" alt="drawing" width="300"/>
+<p>4.7K Resistor</p>
+
+<br>
+
+<img src="./images-iot/battery.jpg" alt="drawing" width="300"/>
+<p>9v Battery and clip</p>
+
+<br>
+
+<img src="./images-iot/wires.jpg" alt="drawing" width="300"/>
+<p>Wires Jumpers</p>
