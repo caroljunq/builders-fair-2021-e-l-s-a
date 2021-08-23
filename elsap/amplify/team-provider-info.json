@@ -1,0 +1,20 @@
+{
+  "dev": {
+    "awscloudformation": {
+      "AuthRoleName": "amplify-elsap-dev-161118-authRole",
+      "UnauthRoleArn": "arn:aws:iam::107207751314:role/amplify-elsap-dev-161118-unauthRole",
+      "AuthRoleArn": "arn:aws:iam::107207751314:role/amplify-elsap-dev-161118-authRole",
+      "Region": "us-east-1",
+      "DeploymentBucketName": "amplify-elsap-dev-161118-deployment",
+      "UnauthRoleName": "amplify-elsap-dev-161118-unauthRole",
+      "StackName": "amplify-elsap-dev-161118",
+      "StackId": "arn:aws:cloudformation:us-east-1:107207751314:stack/amplify-elsap-dev-161118/ea4d1ee0-0445-11ec-9a36-12b6545d058d",
+      "AmplifyAppId": "d1mgcua926up3c"
+    },
+    "categories": {
+      "auth": {
+        "elsap10bc1a2c": {}
+      }
+    }
+  }
+}
