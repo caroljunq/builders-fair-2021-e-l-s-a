@@ -8,9 +8,12 @@
 #include <OneWire.h>
 #include <DallasTemperature.h>
 #include <TinyGPS++.h>
+#include <Preferences.h>
 
 // TinyGPS object
 TinyGPSPlus gps;
+
+Preferences preferences; 
 
 // Pin on ESp32
 static const int RXPin = 16, TXPin = 17;
@@ -32,17 +35,21 @@ DallasTemperature sensors(&oneWire);
 
 
 void setup() {
-
+  preferences.end();
+  preferences.begin("my-app", false);
   // Start the Serial Monitor
   Serial.begin(115200);
   
   // Start the Temperature sensor
   sensors.begin();
+  //sensors.setWaitForConversion(true); 
+  delay(1000);
+
+  sensors.requestTemperatures();
 
   // Start GPS sensor
   neogps.begin(GPSBaud, SERIAL_8N1, RXPin, TXPin);
-
-
+  
 }
 
 void loop() {
@@ -50,7 +57,9 @@ void loop() {
   // waiting data on gps is available
   while (neogps.available()){
       if (gps.encode(neogps.read())){
-  
+        // if device restarts force the temperature sensor gets the current value everytime
+        sensors.requestTemperatures();
+
         // Information Collected
         float latitude = gps.location.lat();
         float longitude = gps.location.lng();
