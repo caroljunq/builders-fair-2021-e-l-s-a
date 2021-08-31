@@ -1,0 +1,13 @@
+
+AWSTemplateFormatVersion: "2010-09-09"
+Description: This template register a device on AWS IoT Core with the proper configurations
+Parameters:
+  DeviceName:
+    Description: The name of the thing you want to register
+    Type: String
+    MinLength: 1
+Resources:
+  MyDevice:
+    Type: AWS::IoT::Thing
+    Properties:
+      ThingName: !Ref DeviceName
