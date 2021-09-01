@@ -3,14 +3,18 @@ import { BrowserModule } from '@angular/platform-browser';
 
 import { AppComponent } from './app.component';
 import { MapComponent } from './map/map.component';
+import { TempComponent } from './temp/temp.component';
+import { NgApexchartsModule } from "ng-apexcharts";
 
 @NgModule({
   declarations: [
     AppComponent,
-    MapComponent
+    MapComponent,
+    TempComponent
   ],
   imports: [
-    BrowserModule
+    BrowserModule,
+    NgApexchartsModule,
   ],
   providers: [],
   bootstrap: [AppComponent]
