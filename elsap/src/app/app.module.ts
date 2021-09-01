@@ -12,7 +12,7 @@ import { TempComponent } from './temp/temp.component';
     TempComponent
   ],
   imports: [
-    BrowserModule
+    BrowserModule,
   ],
   providers: [],
   bootstrap: [AppComponent]
