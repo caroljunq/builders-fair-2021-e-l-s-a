@@ -18,7 +18,11 @@
 // TinyGPS object
 TinyGPSPlus gps;
 
-Preferences preferences; 
+Preferences preferences;
+
+#define DEVICE_NAME "device_1"
+#define CLIENT_ID "fake_clinic_1"
+
 
 // Pin on ESp32
 static const int RXPin = 16, TXPin = 17;
@@ -92,7 +96,9 @@ void publishMessage(double sensor_latitude, double sensor_longitude,float tempC,
 int date_year,int date_month,int date_day,int time_hour,int time_minute,int time_second)
 {
   Serial.println("maoe");
-  StaticJsonDocument<200> doc;
+  StaticJsonDocument<512> doc;
+  doc["device_name"] = DEVICE_NAME;
+  doc["client_id"] = CLIENT_ID;
   doc["latitude"] = sensor_latitude;
   doc["longitude"] = sensor_longitude;
   doc["tempC"] = tempC;
@@ -105,6 +111,9 @@ int date_year,int date_month,int date_day,int time_hour,int time_minute,int time
   doc["time_hour"] = time_hour;
   doc["time_minute"] = time_minute;
   doc["time_second"] = time_second;
+
+//  const int BUFFER_SIZE = JSON_OBJECT_SIZE(12);
+//  Serial.println(BUFFER_SIZE);
   char jsonBuffer[512];
   serializeJson(doc, jsonBuffer); // print to client
 
@@ -148,8 +157,8 @@ unsigned long previousMillis = 0;
 void loop() {
   unsigned long currentMillis = millis();
   // each 30 seconds send data to AWS
-  unsigned long interval = 15000;
-  if (currentMillis - previousMillis >= interval) {
+//  unsigned long interval = 15000;
+//  if (currentMillis - previousMillis >= interval) {
     // save the time you should have toggled the LED
     previousMillis += interval;
   // waiting data on gps is available
