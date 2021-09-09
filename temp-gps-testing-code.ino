@@ -9,6 +9,11 @@
 #include <DallasTemperature.h>
 #include <TinyGPS++.h>
 #include <Preferences.h>
+#include "secrets.h"
+#include <WiFiClientSecure.h>
+#include <MQTTClient.h>
+#include <ArduinoJson.h>
+#include <WiFi.h>
 
 // TinyGPS object
 TinyGPSPlus gps;
@@ -33,6 +38,91 @@ OneWire oneWire(oneWireBus);
 // Pass our oneWire reference to Dallas Temperature sensor 
 DallasTemperature sensors(&oneWire);
 
+// ------------- temporary -----------
+// The MQTT topics that this device should publish/subscribe
+#define AWS_IOT_PUBLISH_TOPIC   "esp32/pub"
+#define AWS_IOT_SUBSCRIBE_TOPIC "esp32/sub"
+
+WiFiClientSecure net = WiFiClientSecure();
+MQTTClient client = MQTTClient(256);
+
+void connectAWS()
+{
+  WiFi.mode(WIFI_STA);
+  WiFi.begin(WIFI_SSID, WIFI_PASSWORD);
+
+  Serial.println("Connecting to Wi-Fi");
+
+  while (WiFi.status() != WL_CONNECTED){
+    delay(500);
+    Serial.print(".");
+  }
+
+  // Configure WiFiClientSecure to use the AWS IoT device credentials
+  net.setCACert(AWS_CERT_CA);
+  net.setCertificate(AWS_CERT_CRT);
+  net.setPrivateKey(AWS_CERT_PRIVATE);
+
+  // Connect to the MQTT broker on the AWS endpoint we defined earlier
+  client.begin(AWS_IOT_ENDPOINT, 8883, net);
+
+  // Create a message handler
+  client.onMessage(messageHandler);
+
+  Serial.print("Connecting to AWS IOT");
+
+  while (!client.connect(THINGNAME)) {
+    Serial.print(".");
+    delay(100);
+  }
+
+  if(!client.connected()){
+    Serial.println("AWS IoT Timeout!");
+    return;
+  }
+
+  // Subscribe to a topic
+  client.subscribe(AWS_IOT_SUBSCRIBE_TOPIC);
+
+  Serial.println("AWS IoT Connected!");
+}
+
+
+void publishMessage(double sensor_latitude, double sensor_longitude,float tempC, float tempF, float altid, float speed_km, 
+int date_year,int date_month,int date_day,int time_hour,int time_minute,int time_second)
+{
+  Serial.println("maoe");
+  StaticJsonDocument<200> doc;
+  doc["latitude"] = sensor_latitude;
+  doc["longitude"] = sensor_longitude;
+  doc["tempC"] = tempC;
+  doc["tempF"] = tempF;
+  doc["altitude"] = altid;
+  doc["speed"] = speed_km;
+  doc["date_year"] = date_year;
+  doc["date_month"] = date_month;
+  doc["date_day"] = date_day;
+  doc["time_hour"] = time_hour;
+  doc["time_minute"] = time_minute;
+  doc["time_second"] = time_second;
+  char jsonBuffer[512];
+  serializeJson(doc, jsonBuffer); // print to client
+
+  client.publish(AWS_IOT_PUBLISH_TOPIC, jsonBuffer);
+  Serial.println("222");
+}
+
+void messageHandler(String &topic, String &payload) {
+  Serial.println("incoming: " + topic + " - " + payload);
+
+//  StaticJsonDocument<200> doc;
+//  deserializeJson(doc, payload);
+//  const char* message = doc["message"];
+}
+
+// --- temporary -----------------
+
+
 
 void setup() {
   preferences.end();
@@ -49,11 +139,19 @@ void setup() {
 
   // Start GPS sensor
   neogps.begin(GPSBaud, SERIAL_8N1, RXPin, TXPin);
-  
+  connectAWS();  
+
 }
 
-void loop() {
+unsigned long previousMillis = 0;
 
+void loop() {
+  unsigned long currentMillis = millis();
+  // each 30 seconds send data to AWS
+  unsigned long interval = 15000;
+  if (currentMillis - previousMillis >= interval) {
+    // save the time you should have toggled the LED
+    previousMillis += interval;
   // waiting data on gps is available
   while (neogps.available()){
       if (gps.encode(neogps.read())){
@@ -61,8 +159,8 @@ void loop() {
         sensors.requestTemperatures();
 
         // Information Collected
-        float latitude = gps.location.lat();
-        float longitude = gps.location.lng();
+        double latitude = gps.location.lat();
+        double longitude = gps.location.lng();
         float altitd_meters = gps.altitude.meters();
         float speed_km_h = gps.speed.kmph();
         int date_year = gps.date.year();
@@ -83,8 +181,16 @@ void loop() {
         Serial.println("ºC");
         Serial.print(temperatureF);
         Serial.println("ºF");
-        Serial.println(" ");          
+        Serial.println(" ");
+        if (!client.connected()){
+          Serial.println("MQTT connection lost, connecting again");
+          connectAWS();
+          publishMessage(latitude,longitude,temperatureC,temperatureF,altitd_meters,speed_km_h,date_year,date_month,date_day,time_hour,time_minute,time_second);               
+        }else{
+          publishMessage(latitude,longitude,temperatureC,temperatureF,altitd_meters,speed_km_h,date_year,date_month,date_day,time_hour,time_minute,time_second);               
+        }
+        break;
       }
    }
-  
+  }  
 }
