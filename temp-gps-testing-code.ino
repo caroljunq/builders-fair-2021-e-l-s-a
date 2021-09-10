@@ -3,29 +3,32 @@
 // https://randomnerdtutorials.com/esp32-ds18b20-temperature-arduino-ide/
 // http://arduiniana.org/libraries/tinygpsplus/ 
 // https://github.com/ahmadlogs/arduino-ide-examples/tree/main/esp32-gps-tracker
+// https://aws.amazon.com/blogs/compute/building-an-aws-iot-core-device-using-aws-serverless-and-an-esp32/
 
 // Required libs
 #include <OneWire.h>
 #include <DallasTemperature.h>
 #include <TinyGPS++.h>
 #include <Preferences.h>
-#include "secrets.h"
 #include <WiFiClientSecure.h>
 #include <MQTTClient.h>
 #include <ArduinoJson.h>
 #include <WiFi.h>
+#include "secrets.h"
 
 // TinyGPS object
 TinyGPSPlus gps;
 
 Preferences preferences;
 
+// Device name and client name
 #define DEVICE_NAME "device_1"
 #define CLIENT_ID "fake_clinic_1"
 
 
 // Pin on ESp32
 static const int RXPin = 16, TXPin = 17;
+
 // Frequency transmission for GPS sensor
 static const uint32_t GPSBaud = 9600;
 
@@ -42,16 +45,15 @@ OneWire oneWire(oneWireBus);
 // Pass our oneWire reference to Dallas Temperature sensor 
 DallasTemperature sensors(&oneWire);
 
-// ------------- temporary -----------
 // The MQTT topics that this device should publish/subscribe
 #define AWS_IOT_PUBLISH_TOPIC   "esp32/pub"
-#define AWS_IOT_SUBSCRIBE_TOPIC "esp32/sub"
+//#define AWS_IOT_SUBSCRIBE_TOPIC "esp32/sub"
 
+//Wifi and MQTT client
 WiFiClientSecure net = WiFiClientSecure();
 MQTTClient client = MQTTClient(256);
 
-void connectAWS()
-{
+void connectAWS(){
   WiFi.mode(WIFI_STA);
   WiFi.begin(WIFI_SSID, WIFI_PASSWORD);
 
@@ -70,8 +72,8 @@ void connectAWS()
   // Connect to the MQTT broker on the AWS endpoint we defined earlier
   client.begin(AWS_IOT_ENDPOINT, 8883, net);
 
-  // Create a message handler
-  client.onMessage(messageHandler);
+  //  // Create a message handler
+  //  client.onMessage(messageHandler);
 
   Serial.print("Connecting to AWS IOT");
 
@@ -86,7 +88,8 @@ void connectAWS()
   }
 
   // Subscribe to a topic
-  client.subscribe(AWS_IOT_SUBSCRIBE_TOPIC);
+//  client.subscribe(AWS_IOT_SUBSCRIBE_TOPIC);
+  client.setKeepAlive(30);
 
   Serial.println("AWS IoT Connected!");
 }
@@ -95,7 +98,7 @@ void connectAWS()
 void publishMessage(double sensor_latitude, double sensor_longitude,float tempC, float tempF, float altid, float speed_km, 
 int date_year,int date_month,int date_day,int time_hour,int time_minute,int time_second)
 {
-  Serial.println("maoe");
+  Serial.println("Sending...");
   StaticJsonDocument<512> doc;
   doc["device_name"] = DEVICE_NAME;
   doc["client_id"] = CLIENT_ID;
@@ -118,19 +121,16 @@ int date_year,int date_month,int date_day,int time_hour,int time_minute,int time
   serializeJson(doc, jsonBuffer); // print to client
 
   client.publish(AWS_IOT_PUBLISH_TOPIC, jsonBuffer);
-  Serial.println("222");
+  Serial.println("Sent!");
 }
 
-void messageHandler(String &topic, String &payload) {
-  Serial.println("incoming: " + topic + " - " + payload);
-
-//  StaticJsonDocument<200> doc;
-//  deserializeJson(doc, payload);
-//  const char* message = doc["message"];
-}
-
-// --- temporary -----------------
-
+//void messageHandler(String &topic, String &payload) {
+//  Serial.println("incoming: " + topic + " - " + payload);
+//
+////  StaticJsonDocument<200> doc;
+////  deserializeJson(doc, payload);
+////  const char* message = doc["message"];
+//}
 
 
 void setup() {
@@ -156,50 +156,52 @@ unsigned long previousMillis = 0;
 
 void loop() {
   unsigned long currentMillis = millis();
+  
   // each 30 seconds send data to AWS
-//  unsigned long interval = 15000;
-//  if (currentMillis - previousMillis >= interval) {
+  unsigned long interval = 15000;
+  
+  if (currentMillis - previousMillis >= interval) {
     // save the time you should have toggled the LED
     previousMillis += interval;
   // waiting data on gps is available
-  while (neogps.available()){
-      if (gps.encode(neogps.read())){
-        // if device restarts force the temperature sensor gets the current value everytime
-        sensors.requestTemperatures();
-
-        // Information Collected
-        double latitude = gps.location.lat();
-        double longitude = gps.location.lng();
-        float altitd_meters = gps.altitude.meters();
-        float speed_km_h = gps.speed.kmph();
-        int date_year = gps.date.year();
-        int date_month = gps.date.month();
-        int date_day = gps.date.day();
-        int time_hour = gps.time.hour();
-        int time_minute = gps.time.minute();
-        int time_second = gps.time.second();
-        float temperatureC = sensors.getTempCByIndex(0);
-        float temperatureF = sensors.getTempFByIndex(0);
-        Serial.print("Latitude="); 
-        Serial.println(latitude,6);
-        Serial.print("Longitude="); 
-        Serial.println(longitude,6);
-        Serial.print("Altitude=");  
-        Serial.println(altitd_meters);
-        Serial.print(temperatureC);
-        Serial.println("ºC");
-        Serial.print(temperatureF);
-        Serial.println("ºF");
-        Serial.println(" ");
-        if (!client.connected()){
-          Serial.println("MQTT connection lost, connecting again");
-          connectAWS();
-          publishMessage(latitude,longitude,temperatureC,temperatureF,altitd_meters,speed_km_h,date_year,date_month,date_day,time_hour,time_minute,time_second);               
-        }else{
-          publishMessage(latitude,longitude,temperatureC,temperatureF,altitd_meters,speed_km_h,date_year,date_month,date_day,time_hour,time_minute,time_second);               
+    while (neogps.available()){
+        if (gps.encode(neogps.read())){
+          // if device restarts force the temperature sensor gets the current value everytime
+          sensors.requestTemperatures();
+  
+          // Information Collected
+          double latitude = gps.location.lat();
+          double longitude = gps.location.lng();
+          float altitd_meters = gps.altitude.meters();
+          float speed_km_h = gps.speed.kmph();
+          int date_year = gps.date.year();
+          int date_month = gps.date.month();
+          int date_day = gps.date.day();
+          int time_hour = gps.time.hour();
+          int time_minute = gps.time.minute();
+          int time_second = gps.time.second();
+          float temperatureC = sensors.getTempCByIndex(0);
+          float temperatureF = sensors.getTempFByIndex(0);
+          Serial.print("Latitude="); 
+          Serial.println(latitude,6);
+          Serial.print("Longitude="); 
+          Serial.println(longitude,6);
+          Serial.print("Altitude=");  
+          Serial.println(altitd_meters);
+          Serial.print(temperatureC);
+          Serial.println("ºC");
+          Serial.print(temperatureF);
+          Serial.println("ºF");
+          Serial.println(" ");
+          if (!client.connected()){
+            Serial.println("MQTT connection lost, connecting again");
+            connectAWS();
+            publishMessage(latitude,longitude,temperatureC,temperatureF,altitd_meters,speed_km_h,date_year,date_month,date_day,time_hour,time_minute,time_second);               
+          }else{
+            publishMessage(latitude,longitude,temperatureC,temperatureF,altitd_meters,speed_km_h,date_year,date_month,date_day,time_hour,time_minute,time_second);               
+          }
+          break;
         }
-        break;
-      }
-   }
-  }  
+     }
+  } 
 }
