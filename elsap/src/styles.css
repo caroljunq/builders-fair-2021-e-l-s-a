@@ -40,3 +40,8 @@ color: white;
     text-align: center;
     background-color: white;
   }
+
+  #chart {
+    max-width: 250px;
+    margin: 35px auto;
+}
