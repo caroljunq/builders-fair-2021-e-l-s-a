@@ -43,9 +43,10 @@
   bottom: 0;
   width: 100%;
   text-align: center;
-  background-color: white;
+  background-color:#232F3E;
+  color: white
 }
 
 #chart {
-  margin: 30px;
+  margin: 65px;
 }
