@@ -10,20 +10,32 @@
 
 <body>
   <app-root></app-root>
-
   <script src="https://cdn.jsdelivr.net/npm/apexcharts"></script>
   <div id="chart">
   </div>
   <script>
+    // function httpGet(theUrl) {
+    //   var xmlHttp = new XMLHttpRequest();
+    //   xmlHttp.open("GET", theUrl, false); // false for synchronous request
+    //   xmlHttp.send(null);
+    //   console.log (xmlHttp.responseText)
+    //   return xmlHttp.responseText;
+    // }
+    const Http = new XMLHttpRequest();
+    const url = "https://4p9d4ru3bd.execute-api.us-east-1.amazonaws.com/prod";
+    Http.open("GET", url);
+    Http.send();
+
+    Http.onreadystatechange = (e) => {
+      console.log(Http.responseText)
+    }
+    
+    var temp = [28, 29, 33, 36, 32, 32, 33]
     var options = {
       series: [
         {
-          name: "High - 2013",
-          data: [28, 29, 33, 36, 32, 32, 33]
-        },
-        {
-          name: "Low - 2013",
-          data: [12, 11, 14, 18, 17, 13, 13]
+          name: "fake_clinic_1",
+          data: temp
         }
       ],
       chart: {
