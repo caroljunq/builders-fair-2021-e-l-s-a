@@ -19,7 +19,7 @@
       return new Promise((resolve, reject) => {
         let xhr = new XMLHttpRequest();
 
-        xhr.open('GET', "https://4p9d4ru3bd.execute-api.us-east-1.amazonaws.com/prod");
+        xhr.open('GET', "https://4p9d4ru3bd.execute-api.us-east-1.amazonaws.com/prod/getTempData");
         xhr.addEventListener('loadend', () => {
           if (xhr.status == 200) {
             console.log("got the response")
@@ -48,29 +48,42 @@
           {
             name: "fake_clinic_1",
             data: temp
+          },
+          {
+            name: "maxi_permited_temp",
+            type: 'line',
+            data: [27,27,27,27,27,27,27]
+          },
+          {
+            name: "min_permite temp",
+            data: [24,24,24,24,24,24,24]
           }
         ],
         chart: {
           height: 350,
           type: 'line',
-          dropShadow: {
-            enabled: true,
-            color: '#000',
-            top: 18,
-            left: 7,
-            blur: 10,
-            opacity: 0.2
-          },
+          // dropShadow: {
+          //   enabled: true,
+          //   color: '#000',
+          //   top: 18,
+          //   left: 7,
+          //   blur: 10,
+          //   opacity: 0.2
+          // },
           toolbar: {
             show: false
           }
         },
-        colors: ['#77B6EA', '#545454'],
+        colors: [ '#545454','#16B3DB', "#8F2F51"],
         dataLabels: {
           enabled: true,
         },
         stroke: {
           curve: 'smooth'
+        },
+        fill: {
+          type:'solid',
+          opacity: [0.35, 1],
         },
         title: {
           text: 'Temperature',
@@ -80,7 +93,7 @@
           borderColor: '#e7e7e7',
           row: {
             colors: ['#f3f3f3', 'transparent'], // takes an array which will be repeated on columns
-            opacity: 0.5
+            opacity: 0.2
           },
         },
         markers: {
