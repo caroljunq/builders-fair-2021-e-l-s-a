@@ -38,52 +38,61 @@
         xhr.send();
       })
     }
+    function getLatLong() {
+      return new Promise((resolve, reject) => {
+        let xhr = new XMLHttpRequest();
 
+        xhr.open('GET', "https://4p9d4ru3bd.execute-api.us-east-1.amazonaws.com/prod/getLatlong");
+        xhr.addEventListener('loadend', () => {
+          if (xhr.status == 200) {
+            console.log("got the response")
+            resolve(JSON.parse(xhr.responseText)
+            );
+            const obj = JSON.parse(xhr.responseText)
+            //console.log(obj.body)
+            resplatlong = obj.body
+            //return String(obj.body)
+          } else {
+            console.log(xhr.responseText);
+            reject("Não foi possível obter as negociações do servidor.");
+          }
+        });
+        xhr.send();
+      })
+    }
     function plotGraph() {
       var temp = resptemp
-      var tempMin = Math.min.apply(null, resptemp) -1
-      var tempMax =  Math.max.apply(null, resptemp) + 1
+      var tempMin = Math.min.apply(null, resptemp) - 1
+      var tempMax = Math.max.apply(null, resptemp) + 1
       var options = {
         series: [
           {
             name: "fake_clinic_1",
             data: temp
           },
-          {
-            name: "maxi_permited_temp",
-            type: 'line',
-            data: [27,27,27,27,27,27,27]
-          },
-          {
-            name: "min_permite temp",
-            data: [24,24,24,24,24,24,24]
-          }
+          // {
+          //   name: "maxi_permited_temp",
+          //   type: 'line',
+          //   data: [27, 27, 27, 27, 27, 27, 27]
+          // },
+          // {
+          //   name: "min_permite temp",
+          //   data: [24, 24, 24, 24, 24, 24, 24]
+          // }
         ],
         chart: {
           height: 350,
           type: 'line',
-          // dropShadow: {
-          //   enabled: true,
-          //   color: '#000',
-          //   top: 18,
-          //   left: 7,
-          //   blur: 10,
-          //   opacity: 0.2
-          // },
           toolbar: {
             show: false
           }
         },
-        colors: [ '#545454','#16B3DB', "#8F2F51"],
+        colors: ['#545454', '#16B3DB', "#8F2F51"],
         dataLabels: {
           enabled: true,
         },
         stroke: {
           curve: 'smooth'
-        },
-        fill: {
-          type:'solid',
-          opacity: [0.35, 1],
         },
         title: {
           text: 'Temperature',
@@ -95,6 +104,26 @@
             colors: ['#f3f3f3', 'transparent'], // takes an array which will be repeated on columns
             opacity: 0.2
           },
+        },
+        tooltip: {
+          custom: function ({ series, seriesIndex, dataPointIndex, w }) {
+            var temp = parseFloat(series[seriesIndex][dataPointIndex])
+            var diffTemp = temp - 25
+            var rottenIndex = (temp * 100 / 25) - 100
+            if (diffTemp == 0) {
+              return '<div class="arrow_box">' +
+                '<span>' + 'The vaccine is currently under the expected temperature (in Celcius)' + '</span>' +
+                '</div>'
+            } else if (diffTemp > 0) {
+              return '<div class="arrow_box">' +
+                '<span>' + 'The vaccine is currently ' + String(diffTemp) + ' Celcius above expected <br> and the rotten index is ' + rottenIndex + '</span>' +
+                '</div>'
+            } else {
+              return '<div class="arrow_box">' +
+                '<span>' + 'The vaccine is currently ' + String(diffTemp) + ' Celcius below expected <br> and the rotten index is ' + rottenIndex + '</span>' +
+                '</div>'
+            }
+          }
         },
         markers: {
           size: 1
@@ -112,6 +141,51 @@
           min: tempMin,
           max: tempMax
         },
+        annotations: {
+          yaxis: [{
+            y: 24,
+            borderColor: '#545454',
+            label: {
+              borderColor: '#00E396',
+              style: {
+                color: '#fff',
+                background: '#00E396',
+              },
+              text: 'Support',
+            }
+          }, {
+            y: 24,
+            y2: 24,
+            borderColor: '#545454',
+            fillColor: '#FFF',
+            opacity: 0.2,
+            label: {
+              borderColor: '#545454',
+              style: {
+                fontSize: '10px',
+                color: '#333',
+                background: '#FFF',
+              },
+              text: 'Min temperature allowed',
+            }
+          },
+            , {
+            y: 27,
+            y2: 27,
+            borderColor: '#000',
+            fillColor: '#FEB019',
+            opacity: 0.2,
+            label: {
+              borderColor: '#333',
+              style: {
+                fontSize: '10px',
+                color: '#fff',
+                background: '#8F2F51',
+              },
+              text: 'max temperature allowed',
+            }
+          }],
+        },
         legend: {
           position: 'top',
           horizontalAlign: 'right',
@@ -124,10 +198,12 @@
       var chart = new ApexCharts(document.querySelector("#chart"), options);
       chart.render();
     }
+
+
     async function f1() {
       await getTemp();
       plotGraph();
-
+      await getLatLong();
     }
     f1()
   </script>
