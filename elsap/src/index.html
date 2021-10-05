@@ -62,7 +62,7 @@
     }
     function plotGraph() {
       var temp = resptemp
-      var tempMin = Math.min.apply(null, resptemp) - 1
+      var tempMin = Math.min.apply(null, resptemp) - 3
       var tempMax = Math.max.apply(null, resptemp) + 1
       var options = {
         series: [
@@ -70,15 +70,6 @@
             name: "fake_clinic_1",
             data: temp
           },
-          // {
-          //   name: "maxi_permited_temp",
-          //   type: 'line',
-          //   data: [27, 27, 27, 27, 27, 27, 27]
-          // },
-          // {
-          //   name: "min_permite temp",
-          //   data: [24, 24, 24, 24, 24, 24, 24]
-          // }
         ],
         chart: {
           height: 350,
@@ -108,8 +99,9 @@
         tooltip: {
           custom: function ({ series, seriesIndex, dataPointIndex, w }) {
             var temp = parseFloat(series[seriesIndex][dataPointIndex])
-            var diffTemp = temp - 25
-            var rottenIndex = (temp * 100 / 25) - 100
+            var tempIdeal = (tempMax+tempMin)/2
+            var diffTemp = temp - tempIdeal
+            var rottenIndex = (temp * 100 / tempIdeal) - 100
             if (diffTemp == 0) {
               return '<div class="arrow_box">' +
                 '<span>' + 'The vaccine is currently under the expected temperature (in Celcius)' + '</span>' +
@@ -143,7 +135,7 @@
         },
         annotations: {
           yaxis: [{
-            y: 24,
+            y: tempMin,
             borderColor: '#545454',
             label: {
               borderColor: '#00E396',
@@ -154,8 +146,8 @@
               text: 'Support',
             }
           }, {
-            y: 24,
-            y2: 24,
+            y: tempMin,
+            y2: tempMin,
             borderColor: '#545454',
             fillColor: '#FFF',
             opacity: 0.2,
@@ -170,8 +162,8 @@
             }
           },
             , {
-            y: 27,
-            y2: 27,
+            y: tempMax,
+            y2: tempMax,
             borderColor: '#000',
             fillColor: '#FEB019',
             opacity: 0.2,
