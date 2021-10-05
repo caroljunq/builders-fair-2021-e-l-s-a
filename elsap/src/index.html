@@ -22,14 +22,11 @@
         xhr.open('GET', "https://4p9d4ru3bd.execute-api.us-east-1.amazonaws.com/prod/getTempData");
         xhr.addEventListener('loadend', () => {
           if (xhr.status == 200) {
-            console.log("got the response")
             resolve(JSON.parse(xhr.responseText)
             );
             const obj = JSON.parse(xhr.responseText)
-            //console.log(obj.body)
             resptemp = obj.body
             console.log(resptemp)
-            //return String(obj.body)
           } else {
             console.log(xhr.responseText);
             reject("Não foi possível obter as negociações do servidor.");
@@ -42,16 +39,13 @@
       return new Promise((resolve, reject) => {
         let xhr = new XMLHttpRequest();
 
-        xhr.open('GET', "https://4p9d4ru3bd.execute-api.us-east-1.amazonaws.com/prod/getLatlong");
+        xhr.open('GET', "https://4p9d4ru3bd.execute-api.us-east-1.amazonaws.com/prod/getLatLong");
         xhr.addEventListener('loadend', () => {
           if (xhr.status == 200) {
-            console.log("got the response")
             resolve(JSON.parse(xhr.responseText)
             );
             const obj = JSON.parse(xhr.responseText)
-            //console.log(obj.body)
             resplatlong = obj.body
-            //return String(obj.body)
           } else {
             console.log(xhr.responseText);
             reject("Não foi possível obter as negociações do servidor.");
@@ -196,6 +190,8 @@
       await getTemp();
       plotGraph();
       await getLatLong();
+      document.getElementById("temp").innerHTML = "Curent temperature " + String(resptemp[0]);
+      document.getElementById("location").innerHTML = "Curent location " + String(resplatlong[0]) + ", " + String(resplatlong[1]);
     }
     f1()
   </script>
