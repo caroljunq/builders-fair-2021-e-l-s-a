@@ -14,7 +14,6 @@
   <div id="chart">
   </div>
   <script>
-
     function getTemp() {
       return new Promise((resolve, reject) => {
         let xhr = new XMLHttpRequest();
@@ -27,6 +26,26 @@
             const obj = JSON.parse(xhr.responseText)
             resptemp = obj.body
             console.log(resptemp)
+          } else {
+            console.log(xhr.responseText);
+            reject("Não foi possível obter as negociações do servidor.");
+          }
+        });
+        xhr.send();
+      })
+    }
+    function getAlt() {
+      return new Promise((resolve, reject) => {
+        let xhr = new XMLHttpRequest();
+
+        xhr.open('GET', "https://4p9d4ru3bd.execute-api.us-east-1.amazonaws.com/prod/getAltitude");
+        xhr.addEventListener('loadend', () => {
+          if (xhr.status == 200) {
+            resolve(JSON.parse(xhr.responseText)
+            );
+            const obj = JSON.parse(xhr.responseText)
+            respAlt = obj.body
+            console.log(respAlt)
           } else {
             console.log(xhr.responseText);
             reject("Não foi possível obter as negociações do servidor.");
@@ -66,7 +85,7 @@
           },
         ],
         chart: {
-          height: 350,
+          height: 450,
           type: 'line',
           toolbar: {
             show: false
@@ -190,8 +209,17 @@
       await getTemp();
       plotGraph();
       await getLatLong();
-      document.getElementById("temp").innerHTML = "Curent temperature " + String(resptemp[0]);
-      document.getElementById("location").innerHTML = "Curent location " + String(resplatlong[0]) + ", " + String(resplatlong[1]);
+      await getAlt();
+
+      if (resptemp[0]> 25 || resptemp[0]< 25 ){
+        document.getElementById("colTemp").className = "col alert-danger box";
+      }
+      if (respAlt[0]> 70){
+        document.getElementById("colAlt").className = "col alert-danger box";
+      }
+      document.getElementById("temp").innerHTML =  String(resptemp[0]);
+      document.getElementById("alt").innerHTML =  String(respAlt[0]);
+      document.getElementById("location").innerHTML = String(resplatlong[0]) + ", " + String(resplatlong[1]);
     }
     f1()
   </script>
