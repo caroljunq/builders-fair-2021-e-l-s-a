@@ -5,3 +5,4 @@ For instructions about:
 - [Front-end[](https://github.com/caroljunq/builders-fair-2021-e-l-s-a/tree/main/elsap) 
 
 E.L.S.A is a solution that helps to monitor one of the most important steps for vaccines - transportation delivery. The solution provides information about package location, moisture and temperature. Using ML and analytics services, E.L.S.A. shows near real-time dashboards about vaccines’ package status and location, and alerts the stackholders (managers, truck drivers, etc.) if there is a problem with the package (ex: high temperatures, location audit, moisture below of the expected)
+
