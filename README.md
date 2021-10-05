@@ -1,2 +1,5 @@
-# builders-fair-2021-e-l-s-a
-builders-fair-2021-e-l-s-a
+# LATAM Builders Fair 2021
+
+For instructions about:
+- IOT device
+- Front-end
