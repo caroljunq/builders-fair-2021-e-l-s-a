@@ -39,7 +39,11 @@
   color: black;
   display: flex;
   flex-direction: row;
-  justify-content: left;
+  justify-content: flex-start !important;
+}
+
+.container-fluid{
+  justify-content: flex-start !important;
 }
 
 .footer {
@@ -93,3 +97,48 @@
     border-radius: 5px;
 }
 
+.topnav a{
+  font-size: 1rem;
+  margin: .5rem;
+  text-decoration: none;
+  display: block;
+  color: #f2f2f2;
+  text-align: center;
+  padding: 14px 16px;
+}
+
+.topnav{
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+}
+
+
+/* .topnav {
+  background-color: #333;
+  overflow: hidden;
+  left:0
+}
+
+/* Style the links inside the navigation bar */
+/* .topnav a {
+  float: right;
+  display: block;
+  color: #f2f2f2;
+  text-align: center;
+  padding: 14px 16px;
+  text-decoration: none;
+  font-size: 17px;
+} */
+
+/* Change the color of links on hover */
+.topnav a:hover {
+  background-color: #ddd;
+  color: black;
+  border-radius: 5px;
+}
+
+/* Hide the link that should open and close the topnav on small screens */
+.topnav .icon {
+  display: none;
+} 
