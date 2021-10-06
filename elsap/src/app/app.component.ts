@@ -21,7 +21,8 @@ export class AppComponent {
   currentRegisters: Array<any> = [];
 
   get10minuteInfo(){
-    this.getInfoService.get10MinuteInfo('fake_clinic_1','device_1','2021-10-06').subscribe(
+    // this.getInfoService.setInfos('fake_clinic_1','device_1','2021-10-06');
+    this.getInfoService.get10MinuteInfo().subscribe(
       (response: any) => {                           //next() callback
         this.temperature = response.body.at(-1)["temp"];
         this.altitude = response.body.at(-1)["altitude"];
