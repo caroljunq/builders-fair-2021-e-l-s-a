@@ -1,11 +1,11 @@
 <script src="https://cdn.jsdelivr.net/npm/apexcharts"></script>
 
 <nav class="navbar">
-  <div class="container-fluid">
+  <div class="container">
     <a class="navbar-brand">
       <img
         src="https://d1.awsstatic.com/logos/aws-logo-lockups/poweredbyaws/PB_AWS_logo_RGB_stacked_REV_SQ.91cd4af40773cbfbd15577a3c2b8a346fe3e8fa2.png"
-        width="30" height="24" class="d-inline-block align-text-top">
+        width="80px" height="80px" class="d-inline-block align-text-top">
     </a>
     <p style="color:aliceblue"> ELSA - Latam Builder's Fair 2021</p>
   </div>
@@ -18,24 +18,30 @@
     <div class="col-8" id="banner">
     </div>
   </div>
-  <div class="row" id="cards">
-    <div id="colTemp" class="col alert-info box">
+  <div class="row line-cards" id="cards">
+    <div id="colTemp" class="col-md-4 box alert-info box card-info-alert" [ngStyle]="{ 'background-color': temperature > 25 ? '#e97769' : '#cff4fc'}">
       <p> Temperature </p>
-      <p id="temp1">{{temperature || 0}}</p>
+      <p id="temp1"><span class="symbol-metric">{{temperature || 0}} °C</span></p>
     </div>
-    <div id="colAlt" class="col alert-info box">
+    <div id="colAlt" class="col-md-3 box alert-info card-info-alert">
       <p> Altitude</p>
-      <p id="alt1">{{altitude || 0}}</p>
+      <p id="alt1"><span class="symbol-metric">{{altitude || 0}} m</span></p>
     </div>
-    <div class="col alert-info box">
+    <div class="col-md-4 box alert-info card-info-alert">
       <p>Speed</p>
-      <p id="speed">{{speed || 0}}</p>
+      <p id="speed"><span class="symbol-metric">{{speed || 0}} Km/h</span></p>
     </div>
+    <!-- <div class="col-md-2 box alert-info card-info-alert">
+      <p>Forecast</p>
+      <p id="speed"><span class="symbol-metric">11 seconds</span></p>
+    </div> -->
   </div>
-  <div class="card">
-    <div class="card-body">
+  <div class="row">
+    <div class="col-md-12">
       <app-map></app-map>
     </div>
   </div>
-  <div id="myChart"></div>
+  <div class="row">
+    <div id="myChart" class="col-md-12"></div>
+  </div>
 </div>

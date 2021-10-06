@@ -13,7 +13,7 @@
 #banner {
   background-image: url(./img/banner.png);
   background-repeat: no-repeat;
-  background-size: 100% 155%;
+  background-size: 100% 100%;
 }
 
 .card {
@@ -22,7 +22,7 @@
   border: 1px solid #eee;
   background-color: #fafafa;
   margin: 22px;
-  padding: 350px;
+  padding: 50px;
   display: flex;
   flex-direction: row;
   justify-content: center;
@@ -66,4 +66,18 @@
 
 .box {
   margin: 5px ;
+  box-shadow: 0px 2px 1px -1px rgb(0 0 0 / 20%), 0px 1px 1px 0px rgb(0 0 0 / 14%), 0px 1px 3px 0px rgb(0 0 0 / 12%);
+}
+
+.card-info-alert{
+  border-radius: 5px;
+}
+
+.symbol-metric{
+  font-size: 28px;
+}
+.line-cards{
+  display: flex;
+  flex: row;
+  justify-content: space-between;
 }
