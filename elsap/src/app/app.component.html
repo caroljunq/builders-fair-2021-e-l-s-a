@@ -21,15 +21,15 @@
   <div class="row" id="cards">
     <div id="colTemp" class="col alert-info box">
       <p> Temperature </p>
-      <p id="temp"> </p>
+      <p id="temp1">{{temperature || 0}}</p>
     </div>
     <div id="colAlt" class="col alert-info box">
       <p> Altitude</p>
-      <p id="alt"> </p>
+      <p id="alt1">{{altitude || 0}}</p>
     </div>
     <div class="col alert-info box">
-      <p> Location</p>
-      <p id="location">  </p>
+      <p>Speed</p>
+      <p id="speed">{{speed || 0}}</p>
     </div>
   </div>
   <div class="card">
@@ -37,4 +37,5 @@
       <app-map></app-map>
     </div>
   </div>
+  <div id="myChart"></div>
 </div>
