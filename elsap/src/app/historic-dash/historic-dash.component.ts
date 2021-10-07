@@ -29,14 +29,15 @@ export class HistoricDashComponent implements OnInit {
 
   ngOnInit(): void {
 
-    this.http.get('https://4p9d4ru3bd.execute-api.us-east-1.amazonaws.com/prod/get-historic-quicksight')
+    this.http.get('https://4p9d4ru3bd.execute-api.us-east-1.amazonaws.com/prod/testeteste')
     .subscribe(
       (response: any) => {                           //next() callback
-        this.url = response.body;
+        this.url = response["EmbedUrl"];
         this.plotQuicksight();
       },
       (error) => {                              //error() callback
         console.error(error)
+        console.log("maoe")
       },
       () => {                                   //complete() callback
         console.error('Request completed')      //This is actually not needed 
