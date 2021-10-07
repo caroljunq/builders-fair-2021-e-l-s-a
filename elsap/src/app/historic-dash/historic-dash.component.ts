@@ -1,4 +1,6 @@
 import { Component, OnInit } from '@angular/core';
+import { HttpClient } from '@angular/common/http';
+import * as QuicksightEmbedding from 'amazon-quicksight-embedding-sdk';
 
 @Component({
   selector: 'app-historic-dash',
@@ -7,9 +9,38 @@ import { Component, OnInit } from '@angular/core';
 })
 export class HistoricDashComponent implements OnInit {
 
-  constructor() { }
+  dashboard: any;
+  url: any;
+  constructor(private http: HttpClient) { }
+
+  plotQuicksight(){
+      var containerDiv = document.getElementById("dashboardContainer");
+      var options = {
+      url: this.url,
+      container: containerDiv,
+      scrolling: "yes",
+
+      height: "700px",
+      width: "100%"
+      };
+
+      this.dashboard = QuicksightEmbedding.embedDashboard(options);
+  }
 
   ngOnInit(): void {
+
+    this.http.get('https://4p9d4ru3bd.execute-api.us-east-1.amazonaws.com/prod/get-historic-quicksight')
+    .subscribe(
+      (response: any) => {                           //next() callback
+        this.url = response.body;
+        this.plotQuicksight();
+      },
+      (error) => {                              //error() callback
+        console.error(error)
+      },
+      () => {                                   //complete() callback
+        console.error('Request completed')      //This is actually not needed 
+      })
   }
 
 }

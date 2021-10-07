@@ -15,7 +15,7 @@ export class GetInfosService {
   date: any;
   
   constructor(private http: HttpClient) {
-   this.date = moment(new Date().getTime()).add(-3, 'h').format("YYYY-MM-DD");
+   this.date = moment().utc().add(-3, 'h').format("YYYY-MM-DD");
    this.client_name = "fake_clinic_1";
    this.device_name = "device_1";
   }
