@@ -20,11 +20,11 @@ def lambda_handler(event, context):
         'tempC': 'target_value'
     })
     filtered_data = filtered_data.sort_values(by='timestamp')
-    filtered_data.to_csv(file_name, index=False)
+    filtered_data.to_csv('/tmp/' + file_name, index=False)
     
-    # Save data to the data lake
+    # Save the dataset to the data lake
     try:
-        boto3.Session().resource('s3').Bucket(bucket_name).put_object(Key='processed-data-forecast-ml/update/{}'.format(file_name), Body=file_name)
+        boto3.Session().resource('s3').Bucket(bucket_name).put_object(Key='processed-data-forecast-ml/update/{}'.format(file_name), Body='/tmp/' + file_name)
         print('Upload to S3 successfully completed')
     except:
         print('Error on uploading file to S3')
