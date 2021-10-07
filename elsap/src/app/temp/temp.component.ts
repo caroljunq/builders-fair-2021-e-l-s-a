@@ -55,8 +55,6 @@ export class TempComponent{
       })
     }
 
-
-
     var options = {
       chart: {
         type: 'line'

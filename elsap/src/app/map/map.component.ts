@@ -3,11 +3,24 @@ import * as L from 'leaflet';
 import { GetInfosService } from "../get-infos.service";
 
 
-// const iconRetinaUrl = 'assets/marker-icon-2x.png';
 const iconUrl = 'assets/red-dot.png';
-// const shadowUrl = 'assets/marker-shadow.png';
 const iconDefault = L.icon({
   iconUrl,
+  iconSize: [20, 20]
+});
+
+const iconRed = L.icon({
+  iconUrl: 'assets/red-dot.png',
+  iconSize: [20, 20]
+});
+
+const iconYellow = L.icon({
+  iconUrl: 'assets/orange-dot.png',
+  iconSize: [20, 20]
+});
+
+const iconBlue = L.icon({
+  iconUrl: 'assets/blue-dot.png',
   iconSize: [20, 20]
 });
 
@@ -64,7 +77,15 @@ export class MapComponent implements AfterViewInit {
     for(let i=0;i<this.currentRegisters.length; i++){
       const lon = this.currentRegisters[i]["long"];
       const lat = this.currentRegisters[i]["lat"];
-      const marker = L.marker([lat, lon]).addTo(this.map);
+      let marker;
+      if(Number(this.currentRegisters[i]["temp"]) > 20 && Number(this.currentRegisters[i]["temp"]) < 25){
+        marker = L.marker([lat, lon],{icon: iconYellow}).addTo(this.map);
+      }else if(Number(this.currentRegisters[i]["temp"]) <= 20){
+        marker = L.marker([lat, lon],{icon: iconBlue}).addTo(this.map);
+      }else{
+        marker = L.marker([lat, lon],{icon: iconRed}).addTo(this.map);
+      }
+
       marker.addTo(this.map);
     }
   }
