@@ -95,6 +95,7 @@
     /* padding: 20px; */
     box-shadow: 0px 2px 1px -1px rgb(0 0 0 / 20%), 0px 1px 1px 0px rgb(0 0 0 / 14%), 0px 1px 3px 0px rgb(0 0 0 / 12%);
     border-radius: 5px;
+    /* margin: 10px; */
 }
 
 .topnav a{
@@ -113,24 +114,6 @@
   justify-content: space-between;
 }
 
-
-/* .topnav {
-  background-color: #333;
-  overflow: hidden;
-  left:0
-}
-
-/* Style the links inside the navigation bar */
-/* .topnav a {
-  float: right;
-  display: block;
-  color: #f2f2f2;
-  text-align: center;
-  padding: 14px 16px;
-  text-decoration: none;
-  font-size: 17px;
-} */
-
 /* Change the color of links on hover */
 .topnav a:hover {
   background-color: #ddd;
@@ -145,4 +128,13 @@
 
 .margin-footer{
   margin-bottom: 100px;
+}
+
+.centered-row{
+  display: flex;
+  justify-content: center;
+}
+
+.margin-box{
+  margin: 20px;
 }
