@@ -142,3 +142,7 @@
 .topnav .icon {
   display: none;
 } 
+
+.margin-footer{
+  margin-bottom: 100px;
+}
