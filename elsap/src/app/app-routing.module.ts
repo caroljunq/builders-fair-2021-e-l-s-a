@@ -9,6 +9,7 @@ const routes: Routes = [
   { path: '', component:  TempComponent},
   { path: 'historic', component:  HistoricDashComponent},
   { path: 'about', component:  AboutComponent}
+  
 ];
 
 @NgModule({
