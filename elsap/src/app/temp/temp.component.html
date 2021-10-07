@@ -1,37 +1,39 @@
 <!--The content below is only a placeholder and can be replaced.-->
-
-
 <script src="https://cdn.jsdelivr.net/npm/apexcharts"></script>
-<div id="chart">
-</div>
-<script>
-var options = {
-  chart: {
-    type: 'bar'
-  },
-  series: [{
-    name: 'sales',
-    data: [30,40,45,50,49,60,70,91,125]
-  }],
-  xaxis: {
-    categories: [1991,1992,1993,1994,1995,1996,1997, 1998,1999]
-  }
-}
 
-var chart = new ApexCharts(document.querySelector("#chart"), options);
+<div class="container">
 
-chart.render();
-</script>
-
-<style>
-    @import url(https://fonts.googleapis.com/css?family=Roboto);
-
-    body {
-        font-family: Roboto, sans-serif;
-    }
-
-    #chart {
-        max-width: 650px;
-        margin: 35px auto;
-    }
-</style>
+    <div class="row">
+      <div class="col" id="title">
+        <h1><br> Electronic <br> Safety <br>Advisor for <br>Vaccines</h1>
+      </div>
+      <div class="col-8" id="banner">
+      </div>
+    </div>
+    <div class="row line-cards" id="cards">
+      <div id="colTemp" class="col-md-4 box alert-info box card-info-alert" [ngStyle]="{ 'background-color': temperature > 25 ? '#e97769' : '#cff4fc'}">
+        <p> Temperature </p>
+        <p id="temp1"><span class="symbol-metric">{{temperature || 0}} °C</span></p>
+      </div>
+      <div id="colAlt" class="col-md-3 box alert-info card-info-alert">
+        <p> Altitude</p>
+        <p id="alt1"><span class="symbol-metric">{{altitude || 0}} m</span></p>
+      </div>
+      <div class="col-md-4 box alert-info card-info-alert">
+        <p>Speed</p>
+        <p id="speed"><span class="symbol-metric">{{speed || 0}} Km/h</span></p>
+      </div>
+      <!-- <div class="col-md-2 box alert-info card-info-alert">
+        <p>Forecast</p>
+        <p id="speed"><span class="symbol-metric">11 seconds</span></p>
+      </div> -->
+    </div>
+    <div class="row row-map">
+      <div class="col-md-12">
+        <app-map></app-map>
+      </div>
+    </div>
+    <div class="row my-chart-row">
+      <div id="myChart" class="col-md-12 card-like"></div>
+    </div>
+  </div>

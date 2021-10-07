@@ -8,17 +8,23 @@ import { AppComponent } from './app.component';
 import { MapComponent } from './map/map.component';
 import { TempComponent } from './temp/temp.component';
 import { NgApexchartsModule } from "ng-apexcharts";
+import { HistoricDashComponent } from './historic-dash/historic-dash.component';
+import { AppRoutingModule } from './app-routing.module';
+import { RouterModule } from '@angular/router';
 
 @NgModule({
   declarations: [
     AppComponent,
     MapComponent,
-    TempComponent
+    TempComponent,
+    HistoricDashComponent
   ],
   imports: [
     BrowserModule,
     NgApexchartsModule,
-    HttpClientModule
+    HttpClientModule,
+    AppRoutingModule,
+    RouterModule
   ],
   providers: [
     MarkerService

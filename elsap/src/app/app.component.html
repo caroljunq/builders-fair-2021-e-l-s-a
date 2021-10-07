@@ -1,6 +1,5 @@
 <script src="https://cdn.jsdelivr.net/npm/apexcharts"></script>
 
-
 <nav class="navbar">
   <div class="container-fluid">
     <a class="navbar-brand">
@@ -9,47 +8,11 @@
         width="80px" height="80px" class="d-inline-block align-text-top">
     </a>
     <div class="topnav" id="myTopnav">
-      <a href="#home" class="active nav-item">Dashboardtes</a>
-      <a href="#news" class="nav-item">Historic</a>
+      <a [routerLink]="''" class="nav-item">Dashboard</a>
+      <a [routerLink]="'/historic'" class="nav-item">Historic</a>
       <a href="#about" class="nav-item">About</a>
     </div>
-    <!-- <p style="color:aliceblue"> ELSA - Latam Builder's Fair 2021</p> -->
   </div>
 </nav>
 
-<div class="container">
-
-  <div class="row">
-    <div class="col" id="title">
-      <h1><br> Electronic <br> Safety <br>Advisor for <br>Vaccines</h1>
-    </div>
-    <div class="col-8" id="banner">
-    </div>
-  </div>
-  <div class="row line-cards" id="cards">
-    <div id="colTemp" class="col-md-4 box alert-info box card-info-alert" [ngStyle]="{ 'background-color': temperature > 25 ? '#e97769' : '#cff4fc'}">
-      <p> Temperature </p>
-      <p id="temp1"><span class="symbol-metric">{{temperature || 0}} °C</span></p>
-    </div>
-    <div id="colAlt" class="col-md-3 box alert-info card-info-alert">
-      <p> Altitude</p>
-      <p id="alt1"><span class="symbol-metric">{{altitude || 0}} m</span></p>
-    </div>
-    <div class="col-md-4 box alert-info card-info-alert">
-      <p>Speed</p>
-      <p id="speed"><span class="symbol-metric">{{speed || 0}} Km/h</span></p>
-    </div>
-    <!-- <div class="col-md-2 box alert-info card-info-alert">
-      <p>Forecast</p>
-      <p id="speed"><span class="symbol-metric">11 seconds</span></p>
-    </div> -->
-  </div>
-  <div class="row row-map">
-    <div class="col-md-12">
-      <app-map></app-map>
-    </div>
-  </div>
-  <div class="row my-chart-row">
-    <div id="myChart" class="col-md-12 card-like"></div>
-  </div>
-</div>
+<router-outlet></router-outlet>
