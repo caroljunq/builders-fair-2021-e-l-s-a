@@ -4,6 +4,7 @@
 // http://arduiniana.org/libraries/tinygpsplus/ 
 // https://github.com/ahmadlogs/arduino-ide-examples/tree/main/esp32-gps-tracker
 // https://aws.amazon.com/blogs/compute/building-an-aws-iot-core-device-using-aws-serverless-and-an-esp32/
+// https://randomnerdtutorials.com/esp32-ssd1306-oled-display-arduino-ide/
 
 // Required libs
 #include <OneWire.h>
@@ -15,6 +16,16 @@
 #include <ArduinoJson.h>
 #include <WiFi.h>
 #include "secrets.h"
+#include <Adafruit_SSD1306.h>
+
+
+#define SCREEN_WIDTH 128 // OLED display width, in pixels
+#define SCREEN_HEIGHT 64 // OLED display height, in pixels
+
+//On ESP32: GPIO-21(SDA), GPIO-22(SCL)
+#define OLED_RESET -1 //Reset pin # (or -1 if sharing Arduino reset pin)
+#define SCREEN_ADDRESS 0x3C //See datasheet for Address
+Adafruit_SSD1306 display(SCREEN_WIDTH, SCREEN_HEIGHT, &Wire, OLED_RESET);
 
 // TinyGPS object
 TinyGPSPlus gps;
@@ -124,14 +135,46 @@ int date_year,int date_month,int date_day,int time_hour,int time_minute,int time
   Serial.println("Sent!");
 }
 
-//void messageHandler(String &topic, String &payload) {
-//  Serial.println("incoming: " + topic + " - " + payload);
-//
-////  StaticJsonDocument<200> doc;
-////  deserializeJson(doc, payload);
-////  const char* message = doc["message"];
-//}
+void print_speed(float temp)
+{
+  display.clearDisplay();
+  display.setTextColor(SSD1306_WHITE);
+       
+//  if (gps.location.isValid() == 1)
+//  {
+   //String gps_speed = String(gps.speed.kmph());
+    display.setTextSize(1);
+    
+    display.setCursor(25, 5);
+    display.print("Lat: ");
+    display.setCursor(50, 5);
+    display.print(gps.location.lat(),6);
 
+    display.setCursor(25, 20);
+    display.print("Lng: ");
+    display.setCursor(50, 20);
+    display.print(gps.location.lng(),6);
+
+    display.setCursor(25, 35);
+    display.print("Speed: ");
+    display.setCursor(65, 35);
+    display.print(gps.speed.kmph());
+    
+    display.setTextSize(1);
+    display.setCursor(0, 50);
+    display.print("Temp");
+    display.setCursor(25, 50);
+    display.print(temp);
+
+    display.setTextSize(1);
+    display.setCursor(70, 50);
+    display.print("ALT:");
+    display.setCursor(95, 50);
+    display.print(gps.altitude.meters(), 0);
+
+    display.display();
+    
+}
 
 void setup() {
   preferences.end();
@@ -148,8 +191,20 @@ void setup() {
 
   // Start GPS sensor
   neogps.begin(GPSBaud, SERIAL_8N1, RXPin, TXPin);
-  connectAWS();  
 
+  // SSD1306_SWITCHCAPVCC = generate display voltage from 3.3V internally
+  if(!display.begin(SSD1306_SWITCHCAPVCC, SCREEN_ADDRESS)) {
+    Serial.println(F("SSD1306 allocation failed"));
+    for(;;); // Don't proceed, loop forever
+  }
+  
+  display.clearDisplay();
+  display.display();
+  
+  delay(2000);
+  
+  connectAWS(); 
+   
 }
 
 unsigned long previousMillis = 0;
@@ -193,6 +248,7 @@ void loop() {
           Serial.print(temperatureF);
           Serial.println("ºF");
           Serial.println(" ");
+          print_speed(temperatureC);
           if (!client.connected()){
             Serial.println("MQTT connection lost, connecting again");
             connectAWS();
@@ -200,6 +256,7 @@ void loop() {
           }else{
             publishMessage(latitude,longitude,temperatureC,temperatureF,altitd_meters,speed_km_h,date_year,date_month,date_day,time_hour,time_minute,time_second);               
           }
+          
           break;
         }
      }
