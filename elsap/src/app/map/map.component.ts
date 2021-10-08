@@ -1,45 +1,30 @@
 import { Component, AfterViewInit } from '@angular/core';
 import * as L from 'leaflet';
-import { MarkerService } from '../marker.service';
+import { GetInfosService } from "../get-infos.service";
 
-const iconRetinaUrl = 'assets/marker-icon-2x.png';
-const iconUrl = 'assets/marker-icon.png';
-const shadowUrl = 'assets/marker-shadow.png';
+
+const iconUrl = 'assets/red-dot.png';
 const iconDefault = L.icon({
-  iconRetinaUrl,
   iconUrl,
-  shadowUrl,
-  iconSize: [25, 41],
-  iconAnchor: [12, 41],
-  popupAnchor: [1, -34],
-  tooltipAnchor: [16, -28],
-  shadowSize: [41, 41]
+  iconSize: [20, 20]
 });
+
+const iconRed = L.icon({
+  iconUrl: 'assets/red-dot.png',
+  iconSize: [20, 20]
+});
+
+const iconYellow = L.icon({
+  iconUrl: 'assets/orange-dot.png',
+  iconSize: [20, 20]
+});
+
+const iconBlue = L.icon({
+  iconUrl: 'assets/blue-dot.png',
+  iconSize: [20, 20]
+});
+
 L.Marker.prototype.options.icon = iconDefault;
-
-function getLatLong() {
-  return new Promise((resolve, reject) => {
-    let xhr = new XMLHttpRequest();
-
-    xhr.open('GET', "https://4p9d4ru3bd.execute-api.us-east-1.amazonaws.com/prod/getLatLong");
-    xhr.addEventListener('loadend', () => {
-      if (xhr.status == 200) {
-        console.log("got the response")
-        resolve(JSON.parse(xhr.responseText)
-        );
-        const obj = JSON.parse(xhr.responseText)
-        //console.log(obj.body)
-        var latlong = obj.body
-        console.log("result lat long" + latlong)
-        //return String(obj.body)
-      } else {
-        console.log(xhr.responseText);
-        reject("Não foi possível obter as negociações do servidor.");
-      }
-    });
-    xhr.send();
-  })
-}
 
 @Component({
   selector: 'app-map',
@@ -48,19 +33,19 @@ function getLatLong() {
 })
 
 export class MapComponent implements AfterViewInit {
-  
+
+  currentRegisters: any;
   private map: any;
+  markersLayer = new L.LayerGroup();
+
   private initMap(): void {
 
-    var resp = getLatLong()
+    this.getLatLong();
 
-    console.log("resp lat long inside map coponet" + resp)
-    var respLat = -23.592013
-    var respLong = -46.689212
 
     this.map = L.map('map', {
-      center: [-23.592013, -46.689212],
-      zoom: 15
+      center: [-22.0154, -47.8911],
+      zoom: 12
     });
 
     const tiles = L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
@@ -69,16 +54,52 @@ export class MapComponent implements AfterViewInit {
       attribution: '&copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a>'
     });
 
-    L.marker([respLat, respLong]).addTo(this.map)
-
 
     tiles.addTo(this.map);
   }
- 
-  constructor(private markerService: MarkerService) { }
+
+  getLatLong(){
+    this.getInfoService.get10MinuteInfo().subscribe(
+      (response: any) => {                           //next() callback
+        this.currentRegisters = response.body;
+        this.plotMap()
+      },
+      (error) => {                              //error() callback
+        console.error(error)
+      },
+      () => {                                   //complete() callback
+        console.error('Request completed')      //This is actually not needed 
+      })
+  }
+
+  plotMap(){
+    this.markersLayer.clearLayers();
+    for(let i=0;i<this.currentRegisters.length; i++){
+      const lon = this.currentRegisters[i]["long"];
+      const lat = this.currentRegisters[i]["lat"];
+      let marker;
+      if(Number(this.currentRegisters[i]["temp"]) > 20 && Number(this.currentRegisters[i]["temp"]) < 25){
+        marker = L.marker([lat, lon],{icon: iconYellow}).addTo(this.map);
+      }else if(Number(this.currentRegisters[i]["temp"]) <= 20){
+        marker = L.marker([lat, lon],{icon: iconBlue}).addTo(this.map);
+      }else{
+        marker = L.marker([lat, lon],{icon: iconRed}).addTo(this.map);
+      }
+
+      marker.addTo(this.map);
+    }
+  }
+  
+  
+
+  constructor(private getInfoService: GetInfosService) {
+    setInterval(() => {
+      this.getLatLong()
+    }, 15000);
+
+  }
 
   ngAfterViewInit(): void {
     this.initMap();
-    this.markerService.makeCapitalMarkers(this.map);
   }
 }
