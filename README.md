@@ -27,8 +27,8 @@ calls SNS to send a SMS message of alert to user.
 
 The architecture can be divided in 3 parts:
 - [IoT](https://github.com/caroljunq/builders-fair-2021-e-l-s-a/blob/main/iot/1-introduciton-iot-module.md)
-- [Analytics and ML](https://google.com)
-- [Front-end](https://github.com/caroljunq/builders-fair-2021-e-l-s-a/tree/main/elsap) 
+- [Analytics and ML](https://github.com/caroljunq/builders-fair-2021-e-l-s-a/blob/main/analytics-ml/1-analytics-services-on-aws.md)
+- [Application](https://github.com/caroljunq/builders-fair-2021-e-l-s-a/blob/main/application-steps/1-building-running-application.md) 
 
 Each section above contains instructions and steps to reproduce the solution.
 
