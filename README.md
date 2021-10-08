@@ -1,4 +1,7 @@
-# LATAM Builders Fair 2021
+# LATAM Builders Fair 2021 - E.L.S.A
+
+![ELSA Architecture](https://github.com/caroljunq/builders-fair-2021-e-l-s-a/blob/main/elsa-logo.png)
+Feel Frozen!
 
 For instructions about:
 - [IOT device](https://github.com/caroljunq/builders-fair-2021-e-l-s-a/tree/main/iot-sensor-steps)
