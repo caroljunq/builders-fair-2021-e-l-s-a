@@ -11,13 +11,15 @@ import { NgApexchartsModule } from "ng-apexcharts";
 import { HistoricDashComponent } from './historic-dash/historic-dash.component';
 import { AppRoutingModule } from './app-routing.module';
 import { RouterModule } from '@angular/router';
+import { AboutComponent } from './about/about.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     MapComponent,
     TempComponent,
-    HistoricDashComponent
+    HistoricDashComponent,
+    AboutComponent
   ],
   imports: [
     BrowserModule,
