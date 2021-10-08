@@ -1,0 +1,144 @@
+@import '~bootstrap/dist/css/bootstrap.min.css';
+
+#title {
+  background-color: #232F3E;
+  border-radius: 4px;
+  color: white;
+}
+
+#mapid {
+  height: 30%;
+}
+
+#banner {
+  background-image: url(./img/banner.png);
+  background-repeat: no-repeat;
+  background-size: 100% 100%;
+}
+
+.card {
+  all: unset;
+  border-radius: 4px;
+  border: 1px solid #eee;
+  background-color: #fafafa;
+  margin: 22px;
+  padding: 50px;
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  transition: all 0.2s ease-in-out;
+  z-index: 1;
+}
+.row{
+  margin-bottom: 15px;
+}
+.navbar {
+  margin-bottom: 2%;
+  background-color: #232F3E;
+  color: black;
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-start !important;
+}
+
+.container-fluid{
+  justify-content: flex-start !important;
+}
+
+.footer {
+  position: fixed;
+  left: 0;
+  bottom: 0;
+  width: 100%;
+  text-align: center;
+  background-color:#232F3E;
+  color: white;
+  z-index: 99;
+  font-size: 12px;
+}
+
+#chart {
+  margin: 65px;
+}
+
+#cards{
+  align-items: center;
+  text-align: center;
+  font-size: 25px;
+  border-radius: 10px;
+}
+
+.box {
+  margin: 5px ;
+  box-shadow: 0px 2px 1px -1px rgb(0 0 0 / 20%), 0px 1px 1px 0px rgb(0 0 0 / 14%), 0px 1px 3px 0px rgb(0 0 0 / 12%);
+}
+
+.card-info-alert{
+  border-radius: 5px;
+}
+
+.symbol-metric{
+  font-size: 28px;
+}
+.line-cards{
+  display: flex;
+  flex: row;
+  justify-content: space-between;
+}
+
+.my-chart-row{
+  margin-bottom: 80px;
+}
+
+.card-like{
+    /* padding: 20px; */
+    box-shadow: 0px 2px 1px -1px rgb(0 0 0 / 20%), 0px 1px 1px 0px rgb(0 0 0 / 14%), 0px 1px 3px 0px rgb(0 0 0 / 12%);
+    border-radius: 5px;
+    /* margin: 10px; */
+}
+
+.topnav a{
+  font-size: 1rem;
+  margin: .5rem;
+  text-decoration: none;
+  display: block;
+  color: #f2f2f2;
+  text-align: center;
+  padding: 14px 16px;
+}
+
+.topnav{
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+}
+
+/* Change the color of links on hover */
+.topnav a:hover {
+  background-color: #ddd;
+  color: black;
+  border-radius: 5px;
+}
+
+/* Hide the link that should open and close the topnav on small screens */
+.topnav .icon {
+  display: none;
+} 
+
+.margin-footer{
+  margin-bottom: 100px;
+}
+
+.centered-row{
+  display: flex;
+  justify-content: center;
+}
+
+.margin-box{
+  margin: 20px;
+}
+/* .row-quicksight{
+  height: 100%;
+  width: 100%;
+} */
