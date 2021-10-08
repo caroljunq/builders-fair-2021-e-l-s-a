@@ -19,8 +19,8 @@ export class HistoricDashComponent implements OnInit {
       url: this.url,
       container: containerDiv,
       scrolling: "yes",
-
-      height: "700px",
+      // loadingHeight: "300px",
+      height: "1200px",
       width: "100%"
       };
 
