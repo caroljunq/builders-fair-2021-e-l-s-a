@@ -33,6 +33,7 @@ The architecture can be divided in 3 parts:
     - [Connect to AWS](https://github.com/caroljunq/builders-fair-2021-e-l-s-a/blob/main/iot/3-connecting-with-aws.md)
 - [Analytics and ML](https://github.com/caroljunq/builders-fair-2021-e-l-s-a/blob/main/analytics-ml/1-analytics-services-on-aws.md)
 - [Application](https://github.com/caroljunq/builders-fair-2021-e-l-s-a/blob/main/application-steps/1-building-running-application.md) 
+- [Scripts folder](https://github.com/caroljunq/builders-fair-2021-e-l-s-a/tree/main/scripts) Codes for sensor and for lambdas and APIs you can use
 
 Each section above contains instructions and steps to reproduce the solution.
 
