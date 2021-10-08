@@ -22,4 +22,6 @@ If you want to build a static website to host somewhere, you can use:
 ng build # requires install of Angular Cli
 ```
 
+To host the web application after **ng build**, we used [Amplify Hosting](https://aws.amazon.com/amplify/hosting/?nc1=h_ls) which provides faster, easier static web hosting with continuous deployment using the AWS Amplify Console.
+
 
