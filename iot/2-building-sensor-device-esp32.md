@@ -1,3 +1,4 @@
+
 # 3- Circuit Design
 To build the sensor device, you can use a protoboard, only wire jumpers, PCB boads (printed circuits), etc. Below there is the design of the circuit.
 
@@ -49,3 +50,5 @@ Putting all together, to collect the data with your sensor, deploy the [code dev
 The script includes the connection with AWS cloud, but we can comment them to test before connect to AWS or if you do not have an AWS account.
 
 Some data like WIFI name ssid and password are stored in a [secrets.h](https://github.com/caroljunq/builders-fair-2021-e-l-s-a/blob/main/scripts/secrets.h) on scripts folder. It is a way to store information, but there are other strategies that follow best practices to better secure your data and connection ex: hardware module to use with ESP32.
+
+**NEXT MODULE -->** [Connect to AWS Cloud](https://github.com/caroljunq/builders-fair-2021-e-l-s-a/blob/main/iot/3-connecting-with-aws.md)

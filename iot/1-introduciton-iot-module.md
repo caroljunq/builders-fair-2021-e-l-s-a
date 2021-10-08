@@ -78,3 +78,8 @@ With Arduino IDE, you need to install the support for ESP32. Follow the tutorial
 
 <img src="./images-iot/display.jpg" alt="drawing" width="300"/>
 <p>Display OLED 0.96</p>
+<br>
+<br>
+<br>
+
+**NEXT MODULE -->** [Building the sensor](https://github.com/caroljunq/builders-fair-2021-e-l-s-a/blob/main/iot/2-building-sensor-device-esp32.md)
