@@ -41,3 +41,6 @@ This solution was applied for vaccines delivery, but it can be applied in other 
 - Identify the quality of transportation routes --> vibration, temperature, moisture, speed
 - Agriculture
 - etc.
+
+## Summary
+TODO
