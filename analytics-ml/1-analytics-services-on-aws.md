@@ -32,6 +32,7 @@ Another services that can help with ETL for IoT data: Glue, and EMR.
 - [Glue Streaming](https://docs.aws.amazon.com/glue/latest/dg/add-job-streaming.html)
 - [Real-time bushfire alerting with Complex Event Processing in Apache Flink on Amazon EMR and IoT sensor network](https://aws.amazon.com/blogs/big-data/real-time-bushfire-alerting-with-complex-event-processing-in-apache-flink-on-amazon-emr-and-iot-sensor-network/)
 
+To explore data or create jobs on notebook environment it is possible to use [EMR Studio](https://aws.amazon.com/emr/features/studio/), [EMR Notebooks](https://docs.aws.amazon.com/emr/latest/ManagementGuide/emr-managed-notebooks.html), [SageMaker Studio](https://aws.amazon.com/sagemaker/studio/).
 
 ## Analyse and expose
 To analyse the data we show the historic data through Quicksgiht embeded feature and [Apex chart library](https://apexcharts.com/docs/angular-charts/) for near real time data. Athena is used as intermediary to allow Quicksight make queries SQL on S3 data lake without the need to create a manifest file.
