@@ -3,19 +3,15 @@ The module IoT we built is responsible for collecting temperature and GPS positi
 
 This document describes the steps to produce the sensor.
 
-# Circuit Design
-<img src="./images-iot/design-circuit.png" alt="drawing" width="400"/>
-
 # 1 - Hardware and tools: what do you need?
 ## Hardware
-- ESP32
+- ESP32 Dev Module
 - GPS Module GY-NEO6MV2
 - Temperature sensor Ds18b20
-- 9V Battery
-- 9v Battery Clip
-- Tension Regulator Lm2596
+- Power Bank
 - Wire Jumper (male/female)
 - Resistor 4.7K $\mathsf{k\Omega}$
+- 0.96 OLED Display Module 128x64 (controller SSD1306)
 
 ## Tools
 - Soldering Iron and tin
@@ -65,20 +61,20 @@ With Arduino IDE, you need to install the support for ESP32. Follow the tutorial
 
 <br>
 
-<img src="./images-iot/tension-regulator.jpg" alt="drawing" width="300"/>
-<p>Tension Regulator Lm2596</p>
-
-<br>
-
 <img src="./images-iot/resistor.jpg" alt="drawing" width="300"/>
 <p>4.7K Resistor</p>
 
 <br>
 
-<img src="./images-iot/battery.jpg" alt="drawing" width="300"/>
-<p>9v Battery and clip</p>
+<img src="./images-iot/wires.jpg" alt="drawing" width="300"/>
+<p>Wires Jumpers</p>
 
 <br>
 
-<img src="./images-iot/wires.jpg" alt="drawing" width="300"/>
-<p>Wires Jumpers</p>
+<img src="./images-iot/power-bank.jpg" alt="drawing" width="300"/>
+<p>Power Bank</p>
+
+<br>
+
+<img src="./images-iot/display.jpg" alt="drawing" width="300"/>
+<p>Display OLED 0.96</p>
