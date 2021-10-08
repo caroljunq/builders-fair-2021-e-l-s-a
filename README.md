@@ -8,6 +8,7 @@ E.L.S.A is a solution that helps to monitor one of the most important steps for 
 
 
 ## Architecture
+The architecture is entire serverless needing less effort to the maintanence enabling the user focus on the business and application purpose.
 
 ![ELSA Architecture](https://github.com/caroljunq/builders-fair-2021-e-l-s-a/blob/main/arch-elsa.png)
 
