@@ -8,7 +8,7 @@ To build the sensor device, you can use a protoboard, only wire jumpers, PCB boa
 This is the final version of circuit, you can use another power source ex: battery 9v. In this case, we are using a power banking.
 On the image, each sensor (temperature, gps, display) has a specific voltage (3.3v or 5v) and connects to specific pins on ESP32. For example, termometer is connected to D4 pin.
 
-We develop a final version of the board, we draw a circuit and printed it manually in a phenolite board as the image bellow.
+We developed a final version of the board, we draw a circuit and printed it manually in a phenolite board as the image bellow.
 
 <br>
 <img src="./images-iot/board.jpeg" alt="drawing" width="400"/>
@@ -44,7 +44,7 @@ We develop a final version of the board, we draw a circuit and printed it manual
 ### OLED Display
 - https://randomnerdtutorials.com/esp32-ssd1306-oled-display-arduino-ide/
 
-# 4- Software part
+# 4- Software
 Putting all together, to collect the data with your sensor, deploy the [code developed](https://github.com/caroljunq/builders-fair-2021-e-l-s-a/blob/main/scripts/esp32-sensor-code.ino) - esp32-sensor-code.ino on [scripts folder ](https://github.com/caroljunq/builders-fair-2021-e-l-s-a/blob/main/scripts/esp32-sensor-code.ino).
 
 The script includes the connection with AWS cloud, but we can comment them to test before connect to AWS or if you do not have an AWS account.

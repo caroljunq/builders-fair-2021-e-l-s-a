@@ -27,6 +27,9 @@ calls SNS to send a SMS message of alert to user.
 
 The architecture can be divided in 3 parts:
 - [IoT](https://github.com/caroljunq/builders-fair-2021-e-l-s-a/blob/main/iot/1-introduciton-iot-module.md)
+    - [Preparation to build the module](https://github.com/caroljunq/builders-fair-2021-e-l-s-a/blob/main/iot/1-introduciton-iot-module.md)
+    - [Building the sensor](https://github.com/caroljunq/builders-fair-2021-e-l-s-a/blob/main/iot/2-building-sensor-device-esp32.md)
+    - [Connect to AWS](https://github.com/caroljunq/builders-fair-2021-e-l-s-a/blob/main/iot/3-connecting-with-aws.md)
 - [Analytics and ML](https://github.com/caroljunq/builders-fair-2021-e-l-s-a/blob/main/analytics-ml/1-analytics-services-on-aws.md)
 - [Application](https://github.com/caroljunq/builders-fair-2021-e-l-s-a/blob/main/application-steps/1-building-running-application.md) 
 
